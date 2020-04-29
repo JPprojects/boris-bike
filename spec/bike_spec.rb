@@ -1,4 +1,4 @@
-require "../docking_station.rb"
+require "../lib/bike.rb"
 
 describe "Bike class" do
   it "checks if the bike is working" do
