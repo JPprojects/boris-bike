@@ -5,7 +5,8 @@ class DockingStation
   @list_of_bikes = ["bike1", "bike2", "bike3"]
   end
 
-  def bike_available?
+  def bike_available?(bike)
+    @bike = bike
     if @list_of_bikes.include? @bike
       return true
     else
@@ -14,11 +15,12 @@ class DockingStation
   end
 
   def release_bike(bike)
-    @bike = bike 
-    if bike_available?() == false
+    @bike = bike
+    if bike_available?(@bike) == false
       fail "bike is not available"
+    else
+      return Bike.new
     end
-    return Bike.new
   end
 
   def dock_a_bike(bike)
@@ -27,8 +29,6 @@ class DockingStation
     # @list_of_bikes.push(@bike)
     return "#{@bike} has docked"
   end
-
-
 end
 
 class Bike
