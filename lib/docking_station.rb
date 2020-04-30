@@ -1,24 +1,45 @@
 require "bike.rb"
 
 class DockingStation
-  attr_reader :available
-  attr_writer :available
+  attr_reader :capacity
+  attr_writer :capacity
+  DEFAULT_CAPACITY = 20
 
   def initialize
-    @available = true
+    @capacity = []
+    check_capacity()
   end
 
-  def release_bike
-    if @available
-      @available = false
-      Bike.new
+  def check_capacity
+    if @capacity.empty?
+      @avaliable = false
+      @full = false
+    elsif @capacity.count == DEFAULT_CAPACITY
+      @avaliable = true
+      @full = true
     else
-      fail "bike is not available"
+      @full = false
+      @avaliable = true
     end
   end
 
-  def dock_a_bike
-    @available = true
-    return @available
+  def release_bike
+    check_capacity()
+    if @avaliable 
+    @capacity.pop
+    Bike.new
+    else
+      fail ("bike unavaliable")
+    end
+  end
+
+  def dock_a_bike(bike)
+    check_capacity
+    if @avaliable && @full
+      fail ("dock full")
+    elsif @full == false
+      @capacity << bike
+      return "#{bike} has been docked"
+    end
   end
 end
